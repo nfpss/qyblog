@@ -16,5 +16,7 @@ import org.springframework.stereotype.Service;
 public interface ArticleService extends IService<ArticleDO> {
 
     ResponseResult hotArticleList();
+
+    ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId);
 }
 

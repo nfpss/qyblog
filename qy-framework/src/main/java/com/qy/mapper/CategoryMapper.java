@@ -1,6 +1,7 @@
 package com.qy.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qy.domian.entity.CategoryDO;
 
 
 /**
@@ -9,7 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author makejava
  * @since 2022-12-13 00:46:08
  */
-public interface CategoryMapper extends BaseMapper<SgCategory> {
+public interface CategoryMapper extends BaseMapper<CategoryDO> {
 
 }
 

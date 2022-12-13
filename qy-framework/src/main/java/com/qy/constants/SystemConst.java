@@ -14,5 +14,13 @@ public class SystemConst {
      *  文章是正常发布状态
      */
     public static final int ARTICLE_STATUS_NORMAL = 0;
+    /**
+     * 分类状态正常
+     */
+    public static final int CATEGORY_STATUS_NORMAL=0;
+    /**
+     * 分类状态禁用
+     */
+    public static final int CATEGORY_STATUS_DISABLE=1;
 
 }

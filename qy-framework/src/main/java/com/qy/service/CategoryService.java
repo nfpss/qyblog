@@ -1,6 +1,8 @@
 package com.qy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qy.domian.entity.CategoryDO;
+import com.qy.response.ResponseResult;
 
 
 /**
@@ -9,7 +11,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author makejava
  * @since 2022-12-13 00:46:10
  */
-public interface CategoryService extends IService<SgCategory> {
+public interface CategoryService extends IService<CategoryDO> {
+
+    ResponseResult getCategoryList();
 
 }
 
