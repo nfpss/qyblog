@@ -8,38 +8,30 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 /**
- * 文章表(Article)表实体类
+ * 友链(LinkDO)表实体类
  *
  * @author makejava
- * @since 2022-12-12 23:41:17
+ * @since 2022-12-14 16:18:08
  */
 @SuppressWarnings("serial")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("sg_article")
-public class ArticleDO {
+@TableName("sg_link")
+public class LinkDO {
     @TableId
     private Long id;
 
-    //标题
-    private String title;
-    //文章内容
-    private String content;
-    //文章摘要
-    private String summary;
-    //所属分类id
-    private Long categoryId;
-    //缩略图
-    private String thumbnail;
-    //是否置顶（0否，1是）
-    private String isTop;
-    //状态（0已发布，1草稿）
+    
+    private String name;
+    
+    private String logo;
+    
+    private String description;
+    //网站地址
+    private String address;
+    //审核状态 (0代表审核通过，1代表审核未通过，2代表未审核)
     private String status;
-    //访问量
-    private Long viewCount;
-    //是否允许评论 1是，0否
-    private String isComment;
     
     private Long createBy;
     
@@ -50,5 +42,9 @@ public class ArticleDO {
     private Date updateTime;
     //删除标志（0代表未删除，1代表已删除）
     private Integer delFlag;
+
+
+
 }
+
 

@@ -38,7 +38,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryDO>
 
     // ①要求只展示有发布正式文章的分类 ②必须是正常状态的分类
     @Override
-    public ResponseResult getCategoryList() {
+    public ResponseResult<List<CategoryVO>> getCategoryList() {
         LambdaQueryWrapper<ArticleDO> queryWrapper = Wrappers.lambdaQuery(ArticleDO.class).eq(ArticleDO::getStatus, SystemConst.ARTICLE_STATUS_NORMAL);
         Set<Long> categoryId = articleMapper.selectList(queryWrapper).stream().map(ArticleDO::getCategoryId).collect(Collectors.toSet());
         LambdaQueryWrapper<CategoryDO> wrapper = Wrappers
@@ -46,9 +46,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryDO>
                 .in(CategoryDO::getId, categoryId);
         List<CategoryDO> categoryDOList = categoryMapper.selectList(wrapper);
         if (CollectionUtils.isEmpty(categoryDOList)) {
-            return ResponseResult.okResult(Collections.emptyList());
+            return ResponseResult.success(Collections.emptyList());
         }
-        return ResponseResult.okResult(BeanCopyUtils.copyList(categoryDOList, CategoryVO.class));
+        return ResponseResult.success(BeanCopyUtils.copyList(categoryDOList, CategoryVO.class));
     }
 }
 

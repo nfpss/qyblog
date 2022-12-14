@@ -2,8 +2,13 @@ package com.qy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.qy.domian.entity.ArticleDO;
+import com.qy.domian.vo.ArticleDetailVO;
+import com.qy.domian.vo.HotArticleVO;
+import com.qy.domian.vo.PageVO;
 import com.qy.response.ResponseResult;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -15,8 +20,10 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ArticleService extends IService<ArticleDO> {
 
-    ResponseResult hotArticleList();
+    ResponseResult<List<HotArticleVO>> hotArticleList();
 
-    ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId);
+    ResponseResult<PageVO> articleList(Integer pageNum, Integer pageSize, Long categoryId);
+
+    ArticleDetailVO getArticleDetail(Long id);
 }
 

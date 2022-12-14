@@ -15,11 +15,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageVO implements Serializable {
+public class PageVO<T> implements Serializable {
 
     private static final long serialVersionUID = 554676961659413981L;
 
-    private List rows;
+    private List<T> rows;
 
     private Long total;
 }
