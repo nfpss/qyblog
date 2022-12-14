@@ -6,8 +6,8 @@ import com.qy.domian.dto.UserDTO;
 import com.qy.domian.entity.LoginUser;
 import com.qy.domian.vo.BlogUserLoginVo;
 import com.qy.domian.vo.UserInfoVo;
-import com.qy.response.AppHttpCodeEnum;
 import com.qy.exception.BizException;
+import com.qy.response.AppHttpCodeEnum;
 import com.qy.service.BlogLoginService;
 import com.qy.utils.BeanCopyUtils;
 import com.qy.utils.JwtUtil;
@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -53,5 +54,13 @@ public class BlogLoginServiceImpl implements BlogLoginService {
                 .token(token)
                 .build();
         return loginVo;
+    }
+
+    @Override
+    public void logout() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long id = loginUser.getUserDO().getId();
+        redisCache.deleteObject(String.format(SystemConst.BLOG_LONG_USER_KEY,id));
     }
 }

@@ -20,19 +20,19 @@ public class BizException extends RuntimeException implements Serializable {
     private String msg;
 
     public BizException(Integer code, String msg) {
-        super(code + ":" + msg);
+        super(msg);
         this.code = code;
         this.msg = msg;
     }
 
     public BizException(AppHttpCodeEnum appHttpCodeEnum) {
-        super(appHttpCodeEnum.getCode() + ":" + appHttpCodeEnum.getMsg());
+        super(appHttpCodeEnum.getMsg());
         this.code = appHttpCodeEnum.getCode();
         this.msg = appHttpCodeEnum.getMsg();
     }
 
     public BizException(AppHttpCodeEnum appHttpCodeEnum, String msg) {
-        super(appHttpCodeEnum.getCode() + ":" + msg);
+        super(msg);
         this.code = appHttpCodeEnum.getCode();
         this.msg = msg;
     }

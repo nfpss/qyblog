@@ -10,4 +10,6 @@ import com.qy.domian.vo.BlogUserLoginVo;
  **/
 public interface BlogLoginService {
     BlogUserLoginVo login(UserDTO user);
+
+    void logout();
 }

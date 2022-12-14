@@ -21,5 +21,6 @@ public class BlogUserLoginVo implements Serializable {
     private static final long serialVersionUID = 6931732535499356274L;
 
     private String token;
+
     private UserInfoVo userInfo;
 }

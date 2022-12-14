@@ -5,10 +5,7 @@ import com.qy.domian.vo.BlogUserLoginVo;
 import com.qy.response.ResponseResult;
 import com.qy.service.BlogLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author pengxiaoxi
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2022/12/14 16:54
  **/
 @RestController
-@RequestMapping("/")
 public class BlogLoginController {
 
     @Autowired
@@ -27,5 +23,16 @@ public class BlogLoginController {
     public ResponseResult<BlogUserLoginVo> login(@RequestBody UserDTO user) {
         BlogUserLoginVo blogUserLoginVo = blogLoginService.login(user);
         return ResponseResult.success(blogUserLoginVo);
+    }
+
+    @PostMapping("/logout")
+    public ResponseResult<Void> logout(){
+        blogLoginService.logout();
+        return ResponseResult.success();
+    }
+
+    @GetMapping("/test")
+    public String logis(){
+        return "sf";
     }
 }

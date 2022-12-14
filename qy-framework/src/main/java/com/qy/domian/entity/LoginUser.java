@@ -34,7 +34,7 @@ public class LoginUser implements UserDetails, Serializable {
     private List<String> permList;
 
     @JSONField(serialize = false)
-    private List<SimpleGrantedAuthority> grantedAuthorityList;
+    private List<SimpleGrantedAuthority> authorities;
 
     public LoginUser(UserDO userDO, List<String> permList) {
         this.userDO = userDO;
@@ -43,8 +43,8 @@ public class LoginUser implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        grantedAuthorityList = permList.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-        return grantedAuthorityList;
+        authorities = permList.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return authorities;
     }
 
     @Override
