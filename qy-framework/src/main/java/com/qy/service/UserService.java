@@ -1,7 +1,9 @@
 package com.qy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qy.domian.dto.UserDTO;
 import com.qy.domian.entity.UserDO;
+import com.qy.domian.vo.UserInfoVo;
 
 
 /**
@@ -12,4 +14,9 @@ import com.qy.domian.entity.UserDO;
  */
 public interface UserService extends IService<UserDO> {
 
+    UserInfoVo getUserInfo();
+
+    void updateUserInfo(UserDO user);
+
+    void register(UserDTO userDTO);
 }

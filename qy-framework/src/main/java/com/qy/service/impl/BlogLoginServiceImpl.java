@@ -39,7 +39,7 @@ public class BlogLoginServiceImpl implements BlogLoginService {
 
     @Override
     public BlogUserLoginVo login(UserDTO user) {
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authentication);
         if (Objects.isNull(authenticate)) {
             throw new BizException(AppHttpCodeEnum.LOGIN_ERROR);

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  * @create: 2022/12/13 0:10
  * @description:
  **/
-public class BeanCopyUtils {
+public final class BeanCopyUtils {
 
     private BeanCopyUtils() {
     }

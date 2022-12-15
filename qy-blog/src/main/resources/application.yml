@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/sg_blog?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
-    password: root
+#    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
@@ -20,3 +20,9 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
       id-type: auto
+oss:
+  ak: P8DHH78rT4ZqE62LdNGZpedrtPUHK6f903J84R9v
+  sk: -m0w1oaUoIrlzla8ciugQK25X-jh4yy2jBvp_3iE
+  bucket: pengxiaoc-blog
+  responseUrl: http://rmxa7hn8u.hn-bkt.clouddn.com/
+

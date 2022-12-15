@@ -41,4 +41,21 @@ public class SystemConst {
 
     public static final String TOKEN = "token";
 
+    /**
+     * 评论类型（0代表文章评论，1代表友链评论)
+     */
+    public static final int COMMENT_ARTICLE_TYPE = 0;
+    public static final int COMMENT_LINK_TYPE = 1;
+    /**
+     * 根评论
+     */
+    public static final int ROOT_COMMENT = -1;
+
+    /**
+     * 注册提示
+     */
+    public static final String REGISTER_USERNAME = "该用户名太受欢迎，请换一个重试";
+    public static final String REGISTER_NICKNAME = "该昵称太受欢迎，请换一个重试";
+    public static final String REGISTER_EMAIL = "该邮箱太受欢迎，请换一个重试";
+
 }

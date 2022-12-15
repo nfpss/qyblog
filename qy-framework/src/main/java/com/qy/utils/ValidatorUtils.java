@@ -16,7 +16,7 @@ import java.util.Set;
  * @Description
  * @date 2022/12/14 14:59
  **/
-public class ValidatorUtils {
+public final class ValidatorUtils {
 
     private ValidatorUtils() {
     }
@@ -35,7 +35,7 @@ public class ValidatorUtils {
         }
         for (ConstraintViolation<Object> objectConstraintViolation : validate) {
             if (StringUtils.isNotBlank(objectConstraintViolation.getMessage())) {
-                throw new BizException(AppHttpCodeEnum.PARAM_ERROR);
+                throw new BizException(AppHttpCodeEnum.PARAM_ERROR.getCode(), objectConstraintViolation.getMessage());
             }
         }
     }
