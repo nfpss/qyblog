@@ -38,6 +38,10 @@ public class SystemConst {
      */
     public static final String BLOG_LONG_USER_KEY = "blogLogin:%s";
 
+    /**
+     * 博客系统后台系统登录的key
+     */
+    public static final String ADMIN_LONG_USER_KEY = "adminLogin:%s";
 
     public static final String TOKEN = "token";
 
@@ -58,4 +62,47 @@ public class SystemConst {
     public static final String REGISTER_NICKNAME = "该昵称太受欢迎，请换一个重试";
     public static final String REGISTER_EMAIL = "该邮箱太受欢迎，请换一个重试";
 
+    /**
+     * 文章浏览次数
+     */
+    public static final String ARTICLE_COUNT_KEY = "articleCount";
+
+    /**
+     * 菜单类型（M目录 C菜单 F按钮)
+     */
+    public static final String MENU_TYPE_M = "M";
+    public static final String MENU_TYPE_C = "C";
+    public static final String MENU_TYPE_F = "F";
+
+    /**
+     * '是否为外链（0是 1否）'
+     */
+    public static final int MENU_IS_FRAME = 0;
+    public static final int MENU_NOT_FRAME = 1;
+
+    /**
+     * 菜单状态（0显示 1隐藏）',
+     */
+    public static final int MENU_VIS_DIS = 0;
+    public static final int MENU_VIS_HIDDEN = 1;
+
+    /**
+     * '菜单状态（0正常 1停用）'
+     */
+    public static final int MENU_STATUS_NORMAL = 0;
+    public static final int MENU_STATUS_START = 1;
+
+    /**
+     * 角色分类 1超级管理员 2 普通角色  11 嘎嘎嘎  12 友链审核员
+     */
+    public static final int ROLE_BY_ADMIN = 1;
+    public static final int ROLE_BY_COMMON = 2;
+    public static final int ROLE_BY_AGGAG = 11;
+    public static final int ROLE_BY_LINK = 12;
+    public static final String USER_ROLE_KEY = "userRoleKey";
+
+    /**
+     * 顶级父类菜单
+     */
+    public static final Long ROOT_MENU = 0L;
 }

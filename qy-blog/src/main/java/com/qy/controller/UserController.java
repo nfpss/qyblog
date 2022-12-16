@@ -34,7 +34,7 @@ public class UserController {
        return ResponseResult.success();
     }
 
-    @LogPrint
+    @LogPrint(value = "用户注册接口")
     @PostMapping("/register")
     public ResponseResult<Void> register(@RequestBody UserDTO userDTO){
         userService.register(userDTO);

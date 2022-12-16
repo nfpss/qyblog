@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qy.config.RedisCache;
 import com.qy.constants.SystemConst;
 import com.qy.domian.entity.ArticleDO;
 import com.qy.domian.entity.CategoryDO;
@@ -16,6 +17,7 @@ import com.qy.response.ResponseResult;
 import com.qy.service.ArticleService;
 import com.qy.service.CategoryService;
 import com.qy.utils.BeanCopyUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,6 +37,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, ArticleDO> im
 
     @Resource
     private CategoryService categoryService;
+
+    @Autowired
+    private RedisCache redisCache;
 
     @Override
     public ResponseResult<List<HotArticleVO>> hotArticleList() {
@@ -75,10 +80,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, ArticleDO> im
                     CategoryDO categoryDO = categoryService.getById(articleDO.getCategoryId());
                     ArticleDetailVO detailVO = BeanCopyUtils.copyBean(articleDO1, ArticleDetailVO.class);
                     detailVO.setCategoryName(categoryDO.getName() == null ? "" : categoryDO.getName());
+                    detailVO.setViewCount(Long.parseLong(redisCache.getCacheMapValue(SystemConst.ARTICLE_COUNT_KEY, id.toString()).toString()));
                     return detailVO;
                 })
                 .orElseGet(ArticleDetailVO::new);
         return articleDetailVO;
+    }
+
+    @Override
+    public void updateViewCount(Long id) {
+        redisCache.incrementMapValue(id.toString(), 1);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.qy.aspect;
 
+import com.qy.annotion.LogPrint;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -35,7 +36,8 @@ public class LogAspect {
         // 打印请求 URL
         log.info("URL            : {}", request.getRequestURL());
         // 打印描述信息
-        log.info("BusinessName   : {}", "不晓得");
+        LogPrint annotation = methodSignature.getMethod().getAnnotation(LogPrint.class);
+        log.info("BusinessName   : {}", annotation.value());
         // 打印 Http method
         log.info("HTTP Method    : {}", request.getMethod());
         // 打印调用 controller 的全路径以及执行方法
