@@ -1,5 +1,6 @@
 package com.qy.utils;
 
+import com.qy.constants.SystemConst;
 import com.qy.domian.entity.LoginUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,8 +30,7 @@ public final class SecurityUtils {
     }
 
     public static Boolean isAdmin() {
-        Long id = getLoginUser().getUserDO().getId();
-        return id != null && 1L == id;
+        return getUserId() == SystemConst.ROLE_BY_ADMIN;
     }
 
     public static Long getUserId() {

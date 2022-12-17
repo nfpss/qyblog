@@ -49,4 +49,10 @@ public class LoginController {
         RouterVO routerVOList = adminLoginService.getRouters();
         return ResponseResult.success(routerVOList);
     }
+
+    @PostMapping("/user/logout")
+    public ResponseResult<Void> logout() {
+        adminLoginService.logout();
+        return ResponseResult.success();
+    }
 }

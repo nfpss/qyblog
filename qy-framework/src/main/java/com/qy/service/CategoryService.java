@@ -2,9 +2,11 @@ package com.qy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.qy.domian.entity.CategoryDO;
+import com.qy.domian.vo.AdminCategoryVO;
 import com.qy.domian.vo.CategoryVO;
 import com.qy.response.ResponseResult;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -18,5 +20,8 @@ public interface CategoryService extends IService<CategoryDO> {
 
     ResponseResult<List<CategoryVO>> getCategoryList();
 
+    List<AdminCategoryVO> listAllCategory();
+
+    void export(HttpServletResponse response);
 }
 

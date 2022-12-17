@@ -36,7 +36,7 @@ public class UploadServiceImpl implements UploadService {
     @Override
     public String uploadImg(MultipartFile img) {
         String originalFilename = img.getOriginalFilename();
-        if (originalFilename.endsWith(".png") || originalFilename.endsWith(".jpeg")) {
+        if (originalFilename.endsWith(".png") || originalFilename.endsWith(".jpeg") || originalFilename.endsWith("img")) {
             String key = getUploadKey(originalFilename);
             return doUploadImg(img, key);
         } else {

@@ -96,6 +96,12 @@ public class AdminLoginServiceImpl implements AdminLoginService {
         return routerVO;
     }
 
+    @Override
+    public void logout() {
+        Long userId = SecurityUtils.getUserId();
+        redisCache.deleteObject(String.format(SystemConst.ADMIN_LONG_USER_KEY, userId));
+    }
+
     private List<MenuVO> buildTreeMenu(List<MenuDO> menuDOS) {
         List<MenuVO> menuVOList = BeanCopyUtils.copyList(menuDOS, MenuVO.class);
         return menuVOList.stream().filter(menuVO -> Objects.equals(menuVO.getParentId(), SystemConst.ROOT_MENU))

@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qy.config.RedisCache;
 import com.qy.constants.SystemConst;
+import com.qy.domian.dto.ArticleDTO;
 import com.qy.domian.entity.ArticleDO;
+import com.qy.domian.entity.ArticleTagDO;
 import com.qy.domian.entity.CategoryDO;
 import com.qy.domian.vo.ArticleDetailVO;
 import com.qy.domian.vo.ArticleVO;
@@ -15,10 +17,12 @@ import com.qy.domian.vo.PageVO;
 import com.qy.mapper.ArticleMapper;
 import com.qy.response.ResponseResult;
 import com.qy.service.ArticleService;
+import com.qy.service.ArticleTagService;
 import com.qy.service.CategoryService;
 import com.qy.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -34,6 +38,9 @@ import java.util.stream.Collectors;
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, ArticleDO> implements ArticleService {
     @Resource
     private ArticleMapper articleMapper;
+
+    @Resource
+    private ArticleTagService articleTagService;
 
     @Resource
     private CategoryService categoryService;
@@ -90,6 +97,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, ArticleDO> im
     @Override
     public void updateViewCount(Long id) {
         redisCache.incrementMapValue(id.toString(), 1);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Throwable.class)
+    public void saveArtice(ArticleDTO articleDTO) {
+        ArticleDO articleDO = BeanCopyUtils.copyBean(articleDTO, ArticleDO.class);
+        save(articleDO);
+        List<Long> tags = articleDTO.getTags();
+        List<ArticleTagDO> collect = tags.stream().map(integer -> new ArticleTagDO(articleDO.getId(), integer)).collect(Collectors.toList());
+        articleTagService.saveBatch(collect);
     }
 }
 

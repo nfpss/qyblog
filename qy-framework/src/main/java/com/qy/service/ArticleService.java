@@ -1,6 +1,7 @@
 package com.qy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qy.domian.dto.ArticleDTO;
 import com.qy.domian.entity.ArticleDO;
 import com.qy.domian.vo.ArticleDetailVO;
 import com.qy.domian.vo.HotArticleVO;
@@ -27,5 +28,7 @@ public interface ArticleService extends IService<ArticleDO> {
     ArticleDetailVO getArticleDetail(Long id);
 
     void updateViewCount(Long id);
+
+    void saveArtice(ArticleDTO articleDTO);
 }
 
