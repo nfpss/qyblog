@@ -14,7 +14,7 @@ import com.qy.domian.vo.PageVO;
  */
 public interface CommentService extends IService<CommentDO> {
 
-    PageVO<CommentVO> commentList(Integer commentType,Long articleId, Integer pageNum, Integer pageSize);
+    PageVO<CommentVO> commentList(String commentType,Long articleId, Integer pageNum, Integer pageSize);
 
     void comment(CommentDO commentDO);
 }

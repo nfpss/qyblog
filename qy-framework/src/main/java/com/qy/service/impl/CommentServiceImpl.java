@@ -35,7 +35,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentDO> im
     private UserService userService;
 
     @Override
-    public PageVO<CommentVO> commentList(Integer commentType, Long articleId, Integer pageNum, Integer pageSize) {
+    public PageVO<CommentVO> commentList(String commentType, Long articleId, Integer pageNum, Integer pageSize) {
         //查询当前文章对应的根评论
         PageParameterHelper parameterHelper = new PageParameterHelper(pageNum, pageSize);
         LambdaQueryWrapper<CommentDO> wrapper = Wrappers.lambdaQuery(CommentDO.class)

@@ -1,10 +1,10 @@
 package com.qy.domian.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.baomidou.mybatisplus.annotation.TableName;
 /**
  * 角色和菜单关联表(RoleMenu)表实体类
  *
@@ -21,10 +21,6 @@ public class RoleMenuDO {
     private Long roleId;
     //菜单ID@TableId
     private Long menuId;
-
-
-
-
 }
 
 

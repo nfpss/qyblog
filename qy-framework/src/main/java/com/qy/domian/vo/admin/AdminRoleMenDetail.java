@@ -1,4 +1,4 @@
-package com.qy.domian.vo;
+package com.qy.domian.vo.admin;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,24 +7,23 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author: qy
- * @create: 2022/12/17 15:33
+ * @create: 2022/12/18 17:07
  * @description:
  **/
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Data
 @Accessors(chain = true)
-public class AdminCategoryVO implements Serializable {
+public class AdminRoleMenDetail implements Serializable {
 
-    private static final long serialVersionUID = 2095240280255564220L;
+    private static final long serialVersionUID = 9350183851154618L;
 
-    private Long id;
+    private List<AdminRoleMenuVO> menus;
 
-    private String description;
-
-    private String name;
+    private List<Long> checkedKeys;
 }

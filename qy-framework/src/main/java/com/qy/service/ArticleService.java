@@ -2,12 +2,15 @@ package com.qy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.qy.domian.dto.ArticleDTO;
+import com.qy.domian.dto.ArticleUpdateDTO;
 import com.qy.domian.entity.ArticleDO;
+import com.qy.domian.entity.PageParameterHelper;
 import com.qy.domian.vo.ArticleDetailVO;
 import com.qy.domian.vo.HotArticleVO;
 import com.qy.domian.vo.PageVO;
+import com.qy.domian.vo.admin.AdminArticleDetailVO;
+import com.qy.domian.vo.admin.AdminArticleVO;
 import com.qy.response.ResponseResult;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -18,7 +21,7 @@ import java.util.List;
  * @author makejava
  * @since 2022-12-12 23:41:18
  */
-@Service
+
 public interface ArticleService extends IService<ArticleDO> {
 
     ResponseResult<List<HotArticleVO>> hotArticleList();
@@ -30,5 +33,13 @@ public interface ArticleService extends IService<ArticleDO> {
     void updateViewCount(Long id);
 
     void saveArtice(ArticleDTO articleDTO);
+
+    PageVO<AdminArticleVO> list(PageParameterHelper pageParameterHelper, String title, String summary);
+
+    AdminArticleDetailVO getInfo(Long id);
+
+    void updateByDTO(ArticleUpdateDTO articleDTO);
+
+    void delete(Long id);
 }
 

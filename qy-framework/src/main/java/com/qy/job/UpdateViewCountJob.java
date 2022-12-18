@@ -29,10 +29,10 @@ public class UpdateViewCountJob {
     private ArticleService articleServicel;
 
     @Scheduled(cron = "0 0/3 * * * ? ")
-    public void updateViewCount(){
+    public void updateViewCount() {
         log.info("开始刷新浏览量");
         doUpdateViewCount();
-        log.info("刷新浏览量结束" );
+        log.info("刷新浏览量结束");
     }
 
     private void doUpdateViewCount() {

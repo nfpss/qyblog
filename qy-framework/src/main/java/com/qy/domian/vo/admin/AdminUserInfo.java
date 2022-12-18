@@ -1,5 +1,6 @@
-package com.qy.domian.vo;
+package com.qy.domian.vo.admin;
 
+import com.qy.domian.vo.UserInfoVo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 package com.qy.service;
 
 import com.qy.domian.dto.UserDTO;
-import com.qy.domian.vo.AdminUserInfo;
+import com.qy.domian.vo.admin.AdminUserInfo;
 import com.qy.domian.vo.RouterVO;
 
 import java.util.Map;

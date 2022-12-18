@@ -32,13 +32,13 @@ public class TagController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseResult delete(@PathVariable("id") Integer id) {
+    public ResponseResult delete(@PathVariable("id") Long id) {
         tagService.removeById(id);
         return ResponseResult.success();
     }
 
     @GetMapping("/{id}")
-    public ResponseResult getInfo(@PathVariable("id") Integer id) {
+    public ResponseResult getInfo(@PathVariable("id") Long id) {
         TagVO tagVO = BeanCopyUtils.copyBean(tagService.getById(id), TagVO.class);
         return ResponseResult.success(tagVO);
     }

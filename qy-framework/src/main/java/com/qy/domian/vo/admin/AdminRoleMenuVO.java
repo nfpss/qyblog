@@ -1,4 +1,4 @@
-package com.qy.domian.vo;
+package com.qy.domian.vo.admin;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +7,11 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author: qy
- * @create: 2022/12/13 0:29
+ * @create: 2022/12/18 16:22
  * @description:
  **/
 @AllArgsConstructor
@@ -18,14 +19,14 @@ import java.io.Serializable;
 @Data
 @ToString
 @Accessors(chain = true)
-public class HotArticleVO implements Serializable {
-
-    private static final long serialVersionUID = -2316607113031671363L;
+public class AdminRoleMenuVO implements Serializable {
+    private static final long serialVersionUID = 7414745195450286207L;
 
     private Long id;
-    //标题
-    private String title;
 
-    //访问量
-    private Long viewCount;
+    private String label;
+
+    private Long parentId;
+
+    private List<AdminRoleMenuVO> children;
 }

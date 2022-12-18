@@ -1,10 +1,11 @@
 package com.qy.domian.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.baomidou.mybatisplus.annotation.TableName;
+
 /**
  * 文章标签关联表(ArticleTag)表实体类
  *
@@ -17,13 +18,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @NoArgsConstructor
 @TableName("sg_article_tag")
 public class ArticleTagDO {
+
     //文章id@TableId
     private Long articleId;
     //标签id@TableId
     private Long tagId;
-
-
-
-
 }
 

@@ -7,11 +7,12 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
  * @author: qy
- * @create: 2022/12/17 15:47
+ * @create: 2022/2/7 23:00
  * @description:
  **/
 @AllArgsConstructor
@@ -19,9 +20,9 @@ import java.util.List;
 @ToString
 @Data
 @Accessors(chain = true)
-public class ArticleDTO implements Serializable {
+public class ArticleUpdateDTO implements Serializable {
 
-    private static final long serialVersionUID = 643410680670749043L;
+    private static final long serialVersionUID = -6048487353039566L;
 
     private String title;
 
@@ -40,4 +41,18 @@ public class ArticleDTO implements Serializable {
     private String status;
 
     private String summary;
+
+    private Long createBy;
+
+    private Date createTime;
+            
+    private Integer delFlag;
+
+    private Long id;
+
+    private Long updateBy;
+
+    private Date updateTime;
+
+    private Long viewCount;
 }

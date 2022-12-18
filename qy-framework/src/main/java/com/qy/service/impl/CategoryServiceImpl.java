@@ -3,13 +3,18 @@ package com.qy.service.impl;
 import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qy.constants.SystemConst;
+import com.qy.domian.dto.CategoryDTO;
 import com.qy.domian.entity.ArticleDO;
 import com.qy.domian.entity.CategoryDO;
 import com.qy.domian.entity.CategoryExcel;
-import com.qy.domian.vo.AdminCategoryVO;
+import com.qy.domian.entity.PageParameterHelper;
+import com.qy.domian.vo.PageVO;
+import com.qy.domian.vo.admin.AdminCategoryVO;
 import com.qy.domian.vo.CategoryVO;
 import com.qy.exception.BizException;
 import com.qy.mapper.ArticleMapper;
@@ -79,6 +84,42 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryDO>
         } catch (IOException e) {
             throw new BizException(AppHttpCodeEnum.SYSTEM_ERROR);
         }
+    }
+
+    @Override
+    public PageVO<AdminCategoryVO> list(PageParameterHelper pageParameterHelper, String name, String status) {
+        Page<CategoryDO> page = new Page<>(pageParameterHelper.getCurrentPage(), pageParameterHelper.getPageSize());
+        LambdaQueryWrapper<CategoryDO> eq = Wrappers.lambdaQuery(CategoryDO.class).like(StringUtils.isNotBlank(name), CategoryDO::getName, name)
+                .eq(StringUtils.isNotBlank(status), CategoryDO::getStatus, status);
+        page(page, eq);
+        return new PageVO<>(BeanCopyUtils.copyList(page.getRecords(), AdminCategoryVO.class), page.getTotal());
+    }
+
+    @Override
+    public void add(CategoryDTO categoryDTO) {
+        CategoryDO categoryDO = BeanCopyUtils.copyBean(categoryDTO, CategoryDO.class);
+        save(categoryDO);
+    }
+
+    @Override
+    public CategoryVO getInfo(Long id) {
+        CategoryDO byId = getById(id);
+        return BeanCopyUtils.copyBean(byId, CategoryVO.class);
+    }
+
+    @Override
+    public void updateByVO(CategoryVO categoryVO) {
+        updateById(BeanCopyUtils.copyBean(categoryVO, CategoryDO.class));
+    }
+
+    @Override
+    public void deletById(Long id) {
+        LambdaQueryWrapper<ArticleDO> eq = Wrappers.lambdaQuery(ArticleDO.class).eq(ArticleDO::getCategoryId, id);
+        List<ArticleDO> articleDOS = articleMapper.selectList(eq);
+        if (CollectionUtils.isNotEmpty(articleDOS)) {
+            throw new BizException(AppHttpCodeEnum.SYSTEM_ERROR, "该分类有文章引用无法删除");
+        }
+        removeById(id);
     }
 }
 

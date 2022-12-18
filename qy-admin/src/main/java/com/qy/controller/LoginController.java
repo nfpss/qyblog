@@ -1,7 +1,7 @@
 package com.qy.controller;
 
 import com.qy.domian.dto.UserDTO;
-import com.qy.domian.vo.AdminUserInfo;
+import com.qy.domian.vo.admin.AdminUserInfo;
 import com.qy.domian.vo.RouterVO;
 import com.qy.exception.BizException;
 import com.qy.response.AppHttpCodeEnum;

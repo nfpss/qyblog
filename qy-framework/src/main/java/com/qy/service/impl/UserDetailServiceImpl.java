@@ -47,7 +47,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Long id = userDO.getId();
         //如果用户id为1代表管理员，roles 中只需要有admin，permissions中需要有所有菜单类型为C或者F的，状态为正常的，未被删除的权限
         List<UserRoleDO> list = userRoleService.list(Wrappers.lambdaQuery(UserRoleDO.class).eq(UserRoleDO::getUserId, id));
-        if (list.stream().anyMatch(userRoleDO -> Objects.equals(Integer.valueOf(id.toString()), SystemConst.ROLE_BY_ADMIN))) {
+        if (list.stream().anyMatch(userRoleDO -> Objects.equals(userRoleDO.getUserId(), SystemConst.ROLE_BY_ADMIN))) {
             ArrayList<String> strings = Lists.newArrayList(SystemConst.MENU_TYPE_C, SystemConst.MENU_TYPE_F);
             LambdaQueryWrapper<MenuDO> queryWrapper = Wrappers.lambdaQuery(MenuDO.class)
                     .eq(MenuDO::getStatus, SystemConst.MENU_STATUS_NORMAL)

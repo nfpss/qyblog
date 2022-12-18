@@ -30,4 +30,6 @@ public class LinkVO implements Serializable {
     private String description;
     //网站地址
     private String address;
+
+    private String status;
 }

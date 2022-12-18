@@ -9,6 +9,8 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.qy.config.OssConfig;
+import com.qy.domian.entity.LinkDO;
+import com.qy.service.LinkService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -74,5 +76,18 @@ public class BlogTest {
             //ignore
         }
 
+    }
+
+    @Autowired
+    private LinkService linkService;
+
+    @Test
+    void testLink(){
+        linkService.list();
+        LinkDO linkDO = new LinkDO();
+        linkDO.setId(4L);
+        linkDO.setName("sfdhfsah");
+        linkService.update(linkDO, null);
+        System.out.println("SFdfdsdsfa");
     }
 }

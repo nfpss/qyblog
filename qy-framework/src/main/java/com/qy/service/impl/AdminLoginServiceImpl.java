@@ -6,7 +6,7 @@ import com.qy.constants.SystemConst;
 import com.qy.domian.dto.UserDTO;
 import com.qy.domian.entity.LoginUser;
 import com.qy.domian.entity.MenuDO;
-import com.qy.domian.vo.AdminUserInfo;
+import com.qy.domian.vo.admin.AdminUserInfo;
 import com.qy.domian.vo.MenuVO;
 import com.qy.domian.vo.RouterVO;
 import com.qy.domian.vo.UserInfoVo;

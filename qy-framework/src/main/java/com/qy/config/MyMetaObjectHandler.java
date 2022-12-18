@@ -16,20 +16,29 @@ import java.util.Date;
 @Component
 @Slf4j
 public class MyMetaObjectHandler implements MetaObjectHandler {
+    private Long userId = 1L;
 
     @Override
     public void insertFill(MetaObject metaObject) {
+
+        try {
+            userId = SecurityUtils.getUserId();
+        } catch (Throwable throwable) {
+            log.info("用户未登录。。。将userId设置为默认处理人:1");
+            userId = 1L;
+        }
         log.info("start insert fill ....");
         this.strictInsertFill(metaObject, "createTime", Date.class, new Date());
-        this.strictInsertFill(metaObject, "createBy", Long.class, SecurityUtils.getUserId());
+        this.strictInsertFill(metaObject, "createBy", Long.class, userId);
         this.strictInsertFill(metaObject, "updateTime", Date.class, new Date());
-        this.strictInsertFill(metaObject, "updateBy", Long.class, SecurityUtils.getUserId());
+        this.strictInsertFill(metaObject, "updateBy", Long.class, userId);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
+        //todo 定时任务有问题记得修改
         log.info("start update fill ....");
         this.strictInsertFill(metaObject, "updateTime", Date.class, new Date());
-        this.strictInsertFill(metaObject, "updateBy", Long.class, SecurityUtils.getUserId());
+        this.strictInsertFill(metaObject, "updateBy", Long.class, userId);
     }
 }

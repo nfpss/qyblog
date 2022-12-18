@@ -2,6 +2,10 @@ package com.qy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.qy.domian.entity.MenuDO;
+import com.qy.domian.vo.admin.AdminRoleMenuDetailVO;
+import com.qy.domian.vo.admin.AdminMenuVO;
+
+import java.util.List;
 
 
 /**
@@ -12,4 +16,11 @@ import com.qy.domian.entity.MenuDO;
  */
 public interface MenuService extends IService<MenuDO> {
 
+    List<AdminMenuVO> listAll(String status, String menuName);
+
+    AdminRoleMenuDetailVO getinfo(Long id);
+
+    void updateByDTO(MenuDO menuDO);
+
+    void deleteByid(Long id);
 }

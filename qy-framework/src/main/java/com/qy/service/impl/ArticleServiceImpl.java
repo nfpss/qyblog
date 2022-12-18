@@ -1,20 +1,26 @@
 package com.qy.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qy.config.RedisCache;
 import com.qy.constants.SystemConst;
 import com.qy.domian.dto.ArticleDTO;
+import com.qy.domian.dto.ArticleUpdateDTO;
 import com.qy.domian.entity.ArticleDO;
 import com.qy.domian.entity.ArticleTagDO;
 import com.qy.domian.entity.CategoryDO;
+import com.qy.domian.entity.PageParameterHelper;
 import com.qy.domian.vo.ArticleDetailVO;
 import com.qy.domian.vo.ArticleVO;
 import com.qy.domian.vo.HotArticleVO;
 import com.qy.domian.vo.PageVO;
+import com.qy.domian.vo.admin.AdminArticleDetailVO;
+import com.qy.domian.vo.admin.AdminArticleVO;
 import com.qy.mapper.ArticleMapper;
+import com.qy.mapper.ArticleTagMapper;
 import com.qy.response.ResponseResult;
 import com.qy.service.ArticleService;
 import com.qy.service.ArticleTagService;
@@ -48,7 +54,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, ArticleDO> im
     @Autowired
     private RedisCache redisCache;
 
+    @Resource
+    private ArticleTagMapper articleTagMapper;
+
     @Override
+
     public ResponseResult<List<HotArticleVO>> hotArticleList() {
         LambdaQueryWrapper<ArticleDO> queryWrapper = Wrappers.lambdaQuery(ArticleDO.class)
                 .eq(ArticleDO::getStatus, SystemConst.ARTICLE_STATUS_NORMAL)
@@ -57,6 +67,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, ArticleDO> im
         Page page = new Page(1, 10);
         articleMapper.selectPage(page, queryWrapper);
         List<HotArticleVO> list = BeanCopyUtils.copyList(page.getRecords(), HotArticleVO.class);
+        list.forEach(hotArticleVO -> {
+            Integer cacheMapValue = redisCache.getCacheMapValue(SystemConst.ARTICLE_COUNT_KEY, hotArticleVO.getId().toString());
+            Long aLong = Long.valueOf(cacheMapValue.toString());
+            hotArticleVO.setViewCount(aLong);
+        });
         return ResponseResult.success(list);
     }
 
@@ -107,6 +122,51 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, ArticleDO> im
         List<Long> tags = articleDTO.getTags();
         List<ArticleTagDO> collect = tags.stream().map(integer -> new ArticleTagDO(articleDO.getId(), integer)).collect(Collectors.toList());
         articleTagService.saveBatch(collect);
+    }
+
+    /**
+     * @param pageParameterHelper
+     * @param title
+     * @param summary
+     * @return
+     */
+    @Override
+    public PageVO<AdminArticleVO> list(PageParameterHelper pageParameterHelper, String title, String summary) {
+        LambdaQueryWrapper<ArticleDO> eq = Wrappers.lambdaQuery(ArticleDO.class)
+                .like(StringUtils.isNotBlank(title), ArticleDO::getTitle, title)
+                .like(StringUtils.isNotBlank(summary), ArticleDO::getSummary, summary)
+                .eq(ArticleDO::getDelFlag, SystemConst.NOT_DELETE);
+        Page<ArticleDO> page = new Page<>(pageParameterHelper.getCurrentPage(), pageParameterHelper.getPageSize());
+        page(page, eq);
+        List<AdminArticleVO> adminArticleVOS = BeanCopyUtils.copyList(page.getRecords(), AdminArticleVO.class);
+        return new PageVO<>(adminArticleVOS, page.getTotal());
+    }
+
+    @Override
+    public AdminArticleDetailVO getInfo(Long id) {
+        ArticleDO articleDO = getById(id);
+        List<ArticleTagDO> list = articleTagService.list(Wrappers.lambdaQuery(ArticleTagDO.class).eq(ArticleTagDO::getArticleId, id));
+        List<Long> collect = list.stream().map(ArticleTagDO::getTagId).collect(Collectors.toList());
+        AdminArticleDetailVO detailVO = BeanCopyUtils.copyBean(articleDO, AdminArticleDetailVO.class);
+        return detailVO.setTags(collect);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    @Override
+    public void updateByDTO(ArticleUpdateDTO articleDTO) {
+        ArticleDO articleDO = BeanCopyUtils.copyBean(articleDTO, ArticleDO.class);
+        updateById(articleDO);
+        List<Long> tags = articleDTO.getTags();
+        List<ArticleTagDO> collect = tags.stream().map(aLong -> new ArticleTagDO(articleDO.getId(), aLong)).collect(Collectors.toList());
+        articleTagService.remove(Wrappers.lambdaQuery(ArticleTagDO.class).eq(ArticleTagDO::getArticleId, articleDTO.getId()));
+        articleTagService.saveBatch(collect);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    @Override
+    public void delete(Long id) {
+        removeById(id);
+        articleTagService.remove(Wrappers.lambdaQuery(ArticleTagDO.class).eq(ArticleTagDO::getArticleId, id));
     }
 }
 
