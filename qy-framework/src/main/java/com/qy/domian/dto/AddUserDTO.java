@@ -1,5 +1,6 @@
 package com.qy.domian.dto;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 @ToString
 @Data
 @Accessors(chain = true)
+@ApiModel(value = "新增用户DTO")
 public class AddUserDTO implements Serializable {
     private static final long serialVersionUID = 214384053889234925L;
 

@@ -5,6 +5,7 @@ import com.qy.domian.vo.LinkVO;
 import com.qy.domian.vo.PageVO;
 import com.qy.response.ResponseResult;
 import com.qy.service.LinkService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +23,14 @@ public class LinkController {
     private LinkService linkService;
 
     @GetMapping("/list")
+    @ApiOperation(value = "获取所有友链",tags = "友链接口")
     public ResponseResult list(Integer pageNum, Integer pageSize, String name, String status) {
         PageVO<LinkVO> linkVOPageVO = linkService.listAll(new PageParameterHelper(pageNum, pageSize), name, status);
         return ResponseResult.success(linkVOPageVO);
     }
 
     @PostMapping
+    @ApiOperation(value = "新增友链",tags = "友链接口")
     public ResponseResult add(@RequestBody LinkVO linkVO) {
         linkService.add(linkVO);
         return ResponseResult.success();
