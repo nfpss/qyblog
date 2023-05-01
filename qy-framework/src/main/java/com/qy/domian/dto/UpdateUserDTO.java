@@ -32,5 +32,7 @@ public class UpdateUserDTO implements Serializable {
 
     private String userName;
 
+    private String phonenumber;
+
     private List<Long> roleIds;
 }

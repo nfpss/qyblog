@@ -1,18 +1,22 @@
 package com.qy.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Maps;
 import com.qy.config.RedisCache;
 import com.qy.constants.SystemConst;
 import com.qy.domian.dto.UserDTO;
 import com.qy.domian.entity.LoginUser;
 import com.qy.domian.entity.MenuDO;
-import com.qy.domian.vo.admin.AdminUserInfo;
+import com.qy.domian.entity.UserRoleDO;
 import com.qy.domian.vo.MenuVO;
 import com.qy.domian.vo.RouterVO;
 import com.qy.domian.vo.UserInfoVo;
+import com.qy.domian.vo.admin.AdminUserInfo;
 import com.qy.exception.BizException;
 import com.qy.mapper.MenuMapper;
 import com.qy.mapper.RoleMapper;
+import com.qy.mapper.UserRoleMapper;
 import com.qy.response.AppHttpCodeEnum;
 import com.qy.service.AdminLoginService;
 import com.qy.utils.BeanCopyUtils;
@@ -26,6 +30,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -49,6 +54,9 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
     @Autowired
     private RoleMapper roleMapper;
+
+    @Resource
+    private UserRoleMapper userRoleMapper;
 
     @Override
     public Map<String, String> login(UserDTO user) {
@@ -85,8 +93,11 @@ public class AdminLoginServiceImpl implements AdminLoginService {
     public RouterVO getRouters() {
         //如果用户id为1代表管理员，menus中需要有所有菜单类型为C或者M的，状态为正常的，未被删除的权限
         Long userId = SecurityUtils.getUserId();
+        LambdaQueryWrapper<UserRoleDO> wrapper = Wrappers.lambdaQuery(UserRoleDO.class).eq(UserRoleDO::getUserId, userId);
+        List<UserRoleDO> userRoleDOS = userRoleMapper.selectList(wrapper);
+        boolean IsAdmin = userRoleDOS.stream().anyMatch(userRoleDO -> userRoleDO.getRoleId() == SystemConst.ROLE_BY_ADMIN);
         List<MenuDO> menuDOS = new ArrayList<>();
-        if (SystemConst.ROLE_BY_ADMIN == userId) {
+        if (IsAdmin) {
             menuDOS = menuMapper.listAllRouter();
         } else {
             menuDOS = menuMapper.listRouterByUserId(userId);

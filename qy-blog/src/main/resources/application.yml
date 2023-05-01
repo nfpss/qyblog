@@ -22,7 +22,4 @@ oss:
   sk: -m0w1oaUoIrlzla8ciugQK25X-jh4yy2jBvp_3iE
   bucket: pengxiaoc-blog
   responseUrl: http://rmxa7hn8u.hn-bkt.clouddn.com/
-logging:
-  level:
-    com.qy.mapper: debug
 

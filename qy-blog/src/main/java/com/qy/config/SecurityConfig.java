@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login").anonymous()
+                .antMatchers("/logout").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .cors()
