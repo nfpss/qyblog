@@ -1,0 +1,28 @@
+server:
+  port: 8989
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/sg_blog?characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 5MB
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: delFlag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+logging:
+  level:
+    com.qy.mapper: debug
+oss:
+  ak: P8DHH78rT4ZqE62LdNGZpedrtPUHK6f903J84R9v
+  sk: -m0w1oaUoIrlzla8ciugQK25X-jh4yy2jBvp_3iE
+  bucket: pengxiaoc-blog
+  responseUrl: http://rmxa7hn8u.hn-bkt.clouddn.com/
